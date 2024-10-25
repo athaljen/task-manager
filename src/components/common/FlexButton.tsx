@@ -7,7 +7,7 @@ const FlexButton = (props: PressableProps) => {
     <Pressable
       {...props}
       style={({pressed}) => [
-        {transform: [{scale: pressed ? 0.9 : 1}]},
+        {transform: [{scale: pressed ? 0.97 : 1}]},
         props.style as ViewStyle,
       ]}>
       {props.children}

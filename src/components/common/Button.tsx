@@ -1,7 +1,6 @@
 import React, {memo} from 'react';
 import {Pressable, StyleSheet, Text, TextStyle, ViewStyle} from 'react-native';
 import colors from '../../theme/colors';
-import {isIos} from '../../constants';
 
 type buttonProps = {
   title: string;
@@ -18,9 +17,8 @@ const Button: React.FC<buttonProps> = props => {
       style={({pressed}) => [
         styles.Button,
         buttonStyle,
-        {opacity: pressed && isIos ? 0.4 : 1},
+        {opacity: pressed ? 0.9 : 1, transform: [{scale: pressed ? 0.97 : 1}]},
       ]}
-      android_ripple={styles.ripple}
       onPress={onPress}>
       <Text style={[styles.text, titleStyle]}>{title}</Text>
     </Pressable>
@@ -29,22 +27,18 @@ const Button: React.FC<buttonProps> = props => {
 
 const styles = StyleSheet.create({
   Button: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.blue,
     alignItems: 'center',
     justifyContent: 'center',
-    flexShrink: 1,
-    paddingVertical: 12,
-    borderRadius: 5,
-    marginVertical: 10,
-    marginHorizontal: 20,
+    borderRadius: 25,
     elevation: 6,
-  },
-  ripple: {
-    color: colors.backdrop,
+    height: 40,
   },
   text: {
     color: colors.white,
     flexShrink: 1,
+    fontFamily: 'Poppins-SemiBold',
+    marginTop: 2,
   },
 });
 

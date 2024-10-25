@@ -4,10 +4,10 @@ import React, {memo} from 'react';
 import {Image, ImageProps} from 'react-native';
 import {TabNavParamList} from './navigation.types';
 import TasksScreen from '../screens/Tabs/TasksScreen';
-import DashBoardScreen from '../screens/Tabs/DashBoardScreen';
 import {Icons} from '../assets';
 import gs from '../theme/gs';
 import colors from '../theme/colors';
+import DashboardNav from './DashboardNav';
 
 const Tab = createBottomTabNavigator<TabNavParamList>();
 
@@ -34,7 +34,10 @@ const TabNav = () => {
         tabBarInactiveTintColor: colors.grey,
         tabBarLabelStyle: [gs.fw600, gs.ffPoppinsSemiBold, gs.fs12],
         tabBarStyle: {borderTopRightRadius: 20, borderTopLeftRadius: 20},
-      }}>
+        tabBarItemStyle: {marginTop: 5},
+        tabBarHideOnKeyboard: true,
+      }}
+      sceneContainerStyle={gs.bgWhite}>
       <Tab.Screen
         name="TasksScreen"
         component={TasksScreen}
@@ -45,7 +48,7 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="DashBoardScreen"
-        component={DashBoardScreen}
+        component={DashboardNav}
         options={{
           tabBarIcon: tabBarIcon.bind(this, Icons.dashboards),
           title: 'Dashboard',

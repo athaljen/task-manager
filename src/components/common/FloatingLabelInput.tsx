@@ -38,7 +38,7 @@ const FloatingLabelInput = (
         toValue: 1,
       }).start();
     }
-  }, []);
+  }, [value, defaultValue]);
 
   const handleFocus = useCallback(() => {
     Animated.timing(animation, {
@@ -71,7 +71,7 @@ const FloatingLabelInput = (
             }),
             bottom: animation.interpolate({
               inputRange: [0, 1],
-              outputRange: [0, 30],
+              outputRange: [0, 24],
             }),
             color: animation.interpolate({
               inputRange: [0, 1],
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.dark,
     fontFamily: 'Poppins-Medium',
-    marginLeft: 5,
+    marginLeft: 3,
   },
   inputStyle: {
     flexGrow: 1,
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Medium',
     fontSize: 16,
     padding: 2,
+    paddingLeft: 3,
   },
   eye: {height: 20, width: 20, marginRight: 5},
 });

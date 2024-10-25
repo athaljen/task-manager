@@ -18,7 +18,10 @@ export const AppScreens = Object.freeze({
   //stacks
   MainTab: 'MainTab',
   TaskCreate: 'TaskCreate',
-  //tabs
+  //main bottom tabs
   TasksScreen: 'TasksScreen',
   DashBoardScreen: 'DashBoardScreen',
+  //top tab
+  Pending: 'Pending',
+  Completed: 'Completed',
 });

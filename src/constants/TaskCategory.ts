@@ -1,5 +1,5 @@
 export default Object.freeze({
-  Default: 'Default',
+  All: 'All',
   Cleaning: 'Cleaning',
   Shopping: 'Shopping',
   Work: 'Work',

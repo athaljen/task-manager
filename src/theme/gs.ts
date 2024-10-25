@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import colors from './colors';
 
 ///these are the styles that are used in the project,
 //comes with react-native-ts-starter['https://www.npmjs.com/package/react-native-ts-starter']
@@ -94,6 +95,7 @@ export default StyleSheet.create({
   textWhite: {color: '#ffffff'},
   textBlack: {color: '#000000'},
   textGray: {color: '#808080'},
+  textBlue: {color: colors.blue},
 
   ////Font Size
   fs12: {fontSize: 12},
@@ -204,6 +206,7 @@ export default StyleSheet.create({
   mh5: {marginHorizontal: 5},
   mh10: {marginHorizontal: 10},
   mh15: {marginHorizontal: 15},
+  mh16: {marginHorizontal: 16},
   mh20: {marginHorizontal: 20},
   ///margin vertical
   mv5: {marginVertical: 5},

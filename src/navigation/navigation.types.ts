@@ -1,11 +1,10 @@
 import {NavigationProp, RouteProp} from '@react-navigation/native';
 import {AppScreens} from '../constants';
-// import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-// import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {TaskType} from '../types/task.type';
 
 export type AppStackParamList = {
   [AppScreens.MainTab]: undefined;
-  [AppScreens.TaskCreate]: undefined;
+  [AppScreens.TaskCreate]: {action: 'edit' | 'view' | 'add'; data?: TaskType};
 };
 
 export type TabNavParamList = {
@@ -13,10 +12,15 @@ export type TabNavParamList = {
   [AppScreens.DashBoardScreen]: undefined;
 };
 
-/// CombinedParamList is a union of all navigations
-type CombinedParamList = AppStackParamList & TabNavParamList;
+export type TopTabParamList = {
+  [AppScreens.Pending]: undefined;
+  [AppScreens.Completed]: undefined;
+};
 
-/// RootNavigations is a union of all navigations
+/// CombinedParamList is a union of all navigation
+type CombinedParamList = AppStackParamList & TabNavParamList & TopTabParamList;
+
+/// RootNavigation is a union of all navigation
 export type RootNavigations = NavigationProp<CombinedParamList>;
 
 export type ScreenProps<

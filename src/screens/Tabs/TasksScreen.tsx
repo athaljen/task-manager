@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {ScreenProps} from '../../navigation/navigation.types';
 import {TaskType} from '../../types/task.type';
 import TaskItem from '../../components/app/TaskItem';
@@ -18,52 +18,40 @@ import ReactNativeCalendarStrip from 'react-native-calendar-strip';
 import FlexButton from '../../components/common/FlexButton';
 import {Icons} from '../../assets';
 import gs from '../../theme/gs';
-
-const DummyTasks: TaskType[] = [
-  {
-    id: '1',
-    date: '2021-10-01',
-    title: 'Task 1',
-    description: 'Description of Task 1',
-    isCompleted: false,
-    category: 'Default',
-    start: '10:00 AM',
-    end: '12:00 PM',
-  },
-  {
-    id: '2',
-    date: '2021-10-02',
-    title: 'Task 2',
-    description: 'Description of Task 2',
-    isCompleted: false,
-    category: 'Shopping',
-    start: '11:30 AM',
-    end: '12:00 PM',
-  },
-  {
-    id: '3',
-    date: '2021-10-03',
-    title: 'Task 3',
-    description: 'Description of Task 3',
-    isCompleted: false,
-    category: 'Cooking',
-    start: '06:00 AM',
-    end: '12:00 PM',
-  },
-];
+import {useSelector} from 'react-redux';
+import {selectTasks} from '../../store/taskSlice';
+import SearchComponent from '../../components/app/SearchComponent';
 
 const Today = moment();
 
 const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
-  const [Tasks, setTasks] = useState<TaskType[]>(DummyTasks || []);
-  const [Date, setDate] = useState(Today);
+  const [Tasks, setTasks] = useState<TaskType[]>([]);
+  const [SelectedDate, setSelectedDate] = useState(Today);
+  const TasksState = useSelector(selectTasks);
 
-  const handleNavigate = useCallback(() => {
-    navigation.navigate('TaskCreate');
-  }, []);
+  useEffect(() => {
+    setTasks(
+      TasksState.filter(
+        item => item.date == moment(SelectedDate).format('DD-MM-YYYY'),
+      ),
+    );
+  }, [SelectedDate, TasksState]);
+
+  const handleTaskNavigate = useCallback(
+    (type: 'add' | 'edit' | 'view', data?: TaskType) => {
+      if (type == 'add') navigation.navigate('TaskCreate', {action: 'add'});
+      else if (type == 'edit')
+        navigation.navigate('TaskCreate', {action: 'edit'});
+      else if (type == 'view')
+        navigation.navigate('TaskCreate', {action: 'view', data});
+    },
+    [],
+  );
 
   const renderTasks = useCallback(({item}: {item: TaskType}) => {
-    return <TaskItem item={item} />;
+    return (
+      <TaskItem item={item} onPress={handleTaskNavigate.bind(this, 'view')} />
+    );
   }, []);
 
   return (
@@ -73,18 +61,19 @@ const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
           style={styles.calendarStyle}
           calendarHeaderStyle={styles.calendarHeader}
           calendarColor={colors.blue}
-          headerText={moment(Date).format('MMMM YYYY')}
+          headerText={moment(SelectedDate).format('MMMM YYYY')}
           dateNameStyle={styles.dateText}
           dateNumberStyle={styles.dateText}
           iconLeftStyle={styles.iconStyle}
           iconRightStyle={styles.iconStyle}
-          selectedDate={Date}
+          selectedDate={SelectedDate}
           highlightDateNameStyle={styles.selectedDate}
           highlightDateNumberStyle={styles.selectedDate}
           highlightDateContainerStyle={styles.highlighted}
           scrollable={true}
-          onDateSelected={setDate}
+          // onDateSelected={setSelectedDate}
         />
+        <SearchComponent />
       </View>
       <StatusBar backgroundColor={colors.blue} barStyle={'light-content'} />
       <View style={styles.taskCont}>
@@ -99,7 +88,9 @@ const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
           style={styles.flatList}
         />
       </View>
-      <FlexButton style={styles.plusCont} onPress={handleNavigate}>
+      <FlexButton
+        style={styles.plusCont}
+        onPress={() => handleTaskNavigate('add')}>
         <Image
           source={Icons.plus}
           style={gs.Icon20}

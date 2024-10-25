@@ -1,5 +1,11 @@
 'use strict';
-import {StyleSheet, TextInputProps, View, ViewStyle} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from 'react-native';
 import React from 'react';
 import {Control, Controller, RegisterOptions} from 'react-hook-form';
 import colors from '../../theme/colors';
@@ -14,11 +20,12 @@ type InputProps = {
   inputStyle?: TextInputProps['style'];
   placeholder?: string;
   inputConfig?: TextInputProps;
-  errorMessage?: any;
+  errorMessage?: string;
   defaultValue?: string;
   BottomViewStyle?: ViewStyle;
-  currency?: string;
   required?: any;
+  onPress?: () => void;
+  enablePress?: boolean;
 };
 
 const ControlledInput = (props: InputProps) => {
@@ -34,10 +41,15 @@ const ControlledInput = (props: InputProps) => {
     defaultValue,
     BottomViewStyle,
     required,
+    onPress,
+    enablePress,
   } = props;
 
   return (
-    <View style={[styles.mainContainer, style]}>
+    <Pressable
+      style={[styles.mainContainer, style]}
+      disabled={!enablePress}
+      onPress={onPress}>
       <Controller
         control={control}
         name={name}
@@ -57,18 +69,20 @@ const ControlledInput = (props: InputProps) => {
         )}
       />
       <Text500 style={styles.errorStyle}>{errorMessage}</Text500>
-    </View>
+    </Pressable>
   );
 };
 
 export default ControlledInput;
 
 const styles = StyleSheet.create({
-  mainContainer: {marginTop: 15},
+  mainContainer: {marginTop: 5},
   inputStyle: {},
   errorStyle: {
     color: colors.red,
     fontSize: 12,
-    marginTop: 5,
+    marginTop: 3,
+    marginStart: 5,
+    alignSelf: 'flex-end',
   },
 });

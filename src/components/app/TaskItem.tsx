@@ -8,14 +8,14 @@ import colors from '../../theme/colors';
 import {Icons} from '../../assets';
 import moment from 'moment';
 
-type Props = {item: TaskType};
+type Props = {item: TaskType; onPress: (item: TaskType) => void};
 
-const TaskItem = ({item}: Props) => {
+const TaskItem = ({item, onPress}: Props) => {
   return (
-    <Card style={styles.TaskItem}>
+    <Card style={styles.TaskItem} onPress={onPress.bind(null, item)}>
       <View style={styles.iconCont}>
         <Image
-          source={Icons[item.category] || Icons.Default}
+          source={Icons[item.category] || Icons.All}
           style={styles.icon}
           resizeMode="contain"
           tintColor={'#7b7b7b'}
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   details: {flex: 1, flexShrink: 1},
   title: {fontSize: 16, fontWeight: 'bold'},
   desc: {fontSize: 13, color: colors.greyDark},
-  date: {fontSize: 13,color: colors.dark},
+  date: {fontSize: 13, color: colors.dark},
   lower: {
     flexDirection: 'row',
     alignItems: 'center',
