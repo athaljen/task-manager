@@ -1,17 +1,8 @@
-import {
-  FlatList,
-  Image,
-  Pressable,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, Image, StatusBar, StyleSheet, View} from 'react-native';
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {ScreenProps} from '../../navigation/navigation.types';
 import {TaskType} from '../../types/task.type';
 import TaskItem from '../../components/app/TaskItem';
-import {Text600} from '../../components/common/Texts';
 import colors from '../../theme/colors';
 import moment from 'moment';
 import ReactNativeCalendarStrip from 'react-native-calendar-strip';
@@ -24,18 +15,32 @@ import SearchComponent from '../../components/app/SearchComponent';
 
 const Today = moment();
 
+type FiltersType = {
+  date: moment.Moment;
+  text: string;
+  category: string;
+};
+
 const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
   const [Tasks, setTasks] = useState<TaskType[]>([]);
-  const [SelectedDate, setSelectedDate] = useState(Today);
   const TasksState = useSelector(selectTasks);
+  const [SelectedFilters, setSelectedFilters] = useState<FiltersType>({
+    date: Today,
+    text: '',
+    category: '',
+  });
 
   useEffect(() => {
     setTasks(
-      TasksState.filter(
-        item => item.date == moment(SelectedDate).format('DD-MM-YYYY'),
-      ),
+      TasksState.filter(item => {
+        return (
+          item.date === moment(SelectedFilters.date).format('DD-MM-YYYY') &&
+          item.title.includes(SelectedFilters.text) &&
+          item.category === SelectedFilters.category
+        );
+      }),
     );
-  }, [SelectedDate, TasksState]);
+  }, [SelectedFilters, TasksState]);
 
   const handleTaskNavigate = useCallback(
     (type: 'add' | 'edit' | 'view', data?: TaskType) => {
@@ -61,19 +66,25 @@ const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
           style={styles.calendarStyle}
           calendarHeaderStyle={styles.calendarHeader}
           calendarColor={colors.blue}
-          headerText={moment(SelectedDate).format('MMMM YYYY')}
+          headerText={moment(SelectedFilters.date).format('MMMM YYYY')}
           dateNameStyle={styles.dateText}
           dateNumberStyle={styles.dateText}
           iconLeftStyle={styles.iconStyle}
           iconRightStyle={styles.iconStyle}
-          selectedDate={SelectedDate}
+          selectedDate={SelectedFilters.date}
           highlightDateNameStyle={styles.selectedDate}
           highlightDateNumberStyle={styles.selectedDate}
           highlightDateContainerStyle={styles.highlighted}
           scrollable={true}
-          // onDateSelected={setSelectedDate}
+          onDateSelected={d => {
+            setSelectedFilters(prev => ({...prev, date: d}));
+          }}
         />
-        <SearchComponent />
+        <SearchComponent
+          onSearch={search => {
+            setSelectedFilters(prev => ({...prev, ...search}));
+          }}
+        />
       </View>
       <StatusBar backgroundColor={colors.blue} barStyle={'light-content'} />
       <View style={styles.taskCont}>

@@ -1,10 +1,17 @@
 import React, {memo} from 'react';
-import {Pressable, StyleSheet, Text, TextStyle, ViewStyle} from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import colors from '../../theme/colors';
 
 type buttonProps = {
   title: string;
-  buttonStyle?: ViewStyle;
+  buttonStyle?: StyleProp<ViewStyle>;
   titleStyle?: TextStyle;
   onPress?: () => void;
 };

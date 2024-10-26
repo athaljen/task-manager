@@ -17,6 +17,7 @@ import moment from 'moment';
 import {useDispatch} from 'react-redux';
 import {addTaskAction} from '../../store/taskSlice';
 import {getUniqueId} from '../../util';
+import CategoryComp from '../../components/app/CategoryComp';
 
 const TaskCreate = ({
   navigation,
@@ -143,37 +144,13 @@ const TaskCreate = ({
             enablePress={isAdd || isEdit}
           />
         </View>
-        <Text600 style={gs.mt5}>Category</Text600>
-        <View style={styles.category}>
-          {Object.values(TaskCategory).map(item => (
-            <FlexButton
-              key={item}
-              style={[
-                styles.catItems,
-                {
-                  backgroundColor:
-                    selectedCat == item ? colors.blue : colors.blueLight,
-                },
-              ]}
-              disabled={!isAdd && !isEdit}
-              onPress={() => {
-                setValue('category', item);
-              }}>
-              <Image
-                source={Icons[item]}
-                style={gs.Icon15}
-                resizeMode="contain"
-                tintColor={selectedCat == item ? colors.white : colors.dark}
-              />
-              <Text600
-                style={{
-                  color: selectedCat == item ? colors.white : colors.dark,
-                }}>
-                {item}
-              </Text600>
-            </FlexButton>
-          ))}
-        </View>
+        <CategoryComp
+          selected={selectedCat}
+          onSelect={item => {
+            setValue('category', item);
+          }}
+          disable={!isAdd && !isEdit}
+        />
         <Button
           title="Create Task"
           buttonStyle={styles.button}
@@ -200,20 +177,6 @@ const styles = StyleSheet.create({
   },
   times: {flexDirection: 'row', justifyContent: 'space-between', gap: 25},
   inputTime: {flex: 1},
-  category: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginVertical: 10,
-    gap: 10,
-  },
-  catItems: {
-    backgroundColor: colors.blueLight,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    flexDirection: 'row',
-    gap: 5,
-  },
   button: {marginTop: 40},
 });
 

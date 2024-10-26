@@ -74,7 +74,7 @@ export default StyleSheet.create({
   //Background
   bgDark: {backgroundColor: '#000000'},
   bgWhite: {backgroundColor: '#ffffff'},
-  bgGray: {backgroundColor: '#808080'},
+  bgGray: {backgroundColor: '#cbcbcb'},
 
   ///Icons
   Icon10: {height: 10, width: 10},
