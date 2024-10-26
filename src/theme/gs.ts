@@ -79,6 +79,7 @@ export default StyleSheet.create({
   ///Icons
   Icon10: {height: 10, width: 10},
   Icon15: {height: 15, width: 15},
+  Icon18: {height: 18, width: 18},
   Icon20: {height: 20, width: 20},
   Icon25: {height: 25, width: 25},
   Icon30: {height: 30, width: 30},

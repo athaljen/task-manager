@@ -22,7 +22,7 @@ const taskSlice = createSlice({
       state.Tasks.push(payload);
     },
     updateTaskAction: (state, {payload}: actionPayload) => {
-      state.Tasks.map(task =>
+      state.Tasks = state.Tasks.map(task =>
         task.id == payload.id ? {...task, ...payload} : task,
       );
     },

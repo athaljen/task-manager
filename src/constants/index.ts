@@ -16,6 +16,7 @@ export enum AuthScreens {}
 
 export const AppScreens = Object.freeze({
   //stacks
+  Splash: 'Splash',
   MainTab: 'MainTab',
   TaskCreate: 'TaskCreate',
   //main bottom tabs

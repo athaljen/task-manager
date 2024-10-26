@@ -1,22 +1,16 @@
 'use strict;';
-import React, {
-  forwardRef,
-  memo,
-  useCallback,
-  useImperativeHandle,
-  useState,
-} from 'react';
+import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import {Modal, Pressable, StyleSheet, View} from 'react-native';
 import colors from '../../theme/colors';
 import DatePicker from 'react-native-date-picker';
-import {Text500, Text600} from '../common/Texts';
+import {Text600} from '../common/Texts';
 import gs from '../../theme/gs';
 
 type Props = {
   onSubmit: (data: {date: string; field: string}) => void;
 };
 
-type actionType = {type: 'time' | 'date'; field: string};
+type actionType = {type: 'time' | 'date'; field: string; date: Date};
 
 const DateTimePick = forwardRef(({onSubmit}: Props, ref) => {
   const [ActionType, setActionType] = useState<actionType>();
@@ -27,6 +21,7 @@ const DateTimePick = forwardRef(({onSubmit}: Props, ref) => {
     () => ({
       open: (d: actionType) => {
         setActionType(d);
+        setSelectedDate(d.date);
       },
     }),
     [],

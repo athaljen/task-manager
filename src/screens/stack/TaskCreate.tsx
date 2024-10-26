@@ -1,6 +1,6 @@
 'use strict';
 import React, {memo, useCallback, useLayoutEffect, useRef} from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {ScreenProps} from '../../navigation/navigation.types';
 import {useForm} from 'react-hook-form';
 import {TaskType} from '../../types/task.type';
@@ -8,16 +8,12 @@ import ControlledInput from '../../components/common/ControlledInput';
 import Button from '../../components/common/Button';
 import gs from '../../theme/gs';
 import colors from '../../theme/colors';
-import TaskCategory from '../../constants/TaskCategory';
-import FlexButton from '../../components/common/FlexButton';
-import {Text600} from '../../components/common/Texts';
-import {Icons} from '../../assets';
 import DateTimePick from '../../components/app/DateTimePick';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
-import {addTaskAction} from '../../store/taskSlice';
-import {getUniqueId} from '../../util';
+import {addTaskAction, updateTaskAction} from '../../store/taskSlice';
 import CategoryComp from '../../components/app/CategoryComp';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 
 const TaskCreate = ({
   navigation,
@@ -49,7 +45,7 @@ const TaskCreate = ({
       date: defaultData?.date || '',
       start: defaultData?.start || '',
       end: defaultData?.end || '',
-      category: defaultData?.category || 'All',
+      category: defaultData?.category || 'Default',
       id: defaultData?.id || '',
       isCompleted: defaultData?.isCompleted || false,
     },
@@ -61,16 +57,34 @@ const TaskCreate = ({
 
   const onSubmit = useCallback(
     (data: TaskType) => {
-      if (isEdit) {
+      if (isAdd) {
         dispatch(addTaskAction({...data}));
-      } else if (isAdd) {
-        const id = getUniqueId();
-        dispatch(addTaskAction({...data, id: id}));
+        Toast.show({
+          title: 'Task Created',
+          textBody: 'Task has been created successfully',
+          type: ALERT_TYPE.SUCCESS,
+        });
+      } else if (isEdit) {
+        dispatch(updateTaskAction(data));
+        Toast.show({
+          title: 'Task Updated',
+          textBody: 'Task has been updated successfully',
+          type: ALERT_TYPE.SUCCESS,
+        });
       } else {
+        dispatch(
+          updateTaskAction({...data, isCompleted: !defaultData?.isCompleted}),
+        );
+        Toast.show({
+          title: 'Task Update',
+          textBody: 'Task has been updated successfully',
+          type: ALERT_TYPE.SUCCESS,
+        });
       }
+
       navigation.goBack();
     },
-    [isAdd, isEdit],
+    [isAdd, isEdit, dispatch, defaultData?.isCompleted],
   );
 
   const handleDateTimeSelect = useCallback(
@@ -78,20 +92,29 @@ const TaskCreate = ({
       if (data.field == 'date') {
         setValue('date', moment(data.date).format('DD-MM-YYYY'));
       } else if (data.field == 'start') {
-        setValue('start', moment(data.date).format('HH:mm A'));
+        setValue('start', moment(data.date).format('hh:mm A'));
       } else if (data.field == 'end') {
-        setValue('end', moment(data.date).format('HH:mm A'));
+        setValue('end', moment(data.date).format('hh:mm A'));
       }
     },
     [],
   );
 
-  const openDateModal = useCallback((forField: 'date' | 'start' | 'end') => {
-    dateModalRef.current.open({
-      type: forField == 'date' ? 'date' : 'time',
-      field: forField,
-    });
-  }, []);
+  const openDateModal = useCallback(
+    (forField: 'date' | 'start' | 'end') => {
+      dateModalRef.current.open({
+        type: forField == 'date' ? 'date' : 'time',
+        field: forField,
+        date: defaultData?.[forField]
+          ? moment(
+              defaultData?.[forField],
+              forField == 'date' ? 'DD-MM-YYYY' : 'hh:mm A',
+            ).toDate()
+          : new Date(),
+      });
+    },
+    [defaultData],
+  );
 
   return (
     <View style={styles.TaskCreate}>
@@ -127,7 +150,7 @@ const TaskCreate = ({
         <View style={styles.times}>
           <ControlledInput
             control={control}
-            style={styles.inputTime}
+            style={gs.flex1}
             name="start"
             placeholder="Start Time"
             inputConfig={{editable: false}}
@@ -136,7 +159,7 @@ const TaskCreate = ({
           />
           <ControlledInput
             control={control}
-            style={styles.inputTime}
+            style={gs.flex1}
             name="end"
             placeholder="End Time"
             inputConfig={{editable: false}}
@@ -152,7 +175,15 @@ const TaskCreate = ({
           disable={!isAdd && !isEdit}
         />
         <Button
-          title="Create Task"
+          title={
+            isAdd
+              ? 'Create Task'
+              : isEdit
+              ? 'Update Task'
+              : defaultData?.isCompleted
+              ? 'Mark Incomplete'
+              : 'Mark Complete'
+          }
           buttonStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         />
@@ -170,13 +201,8 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 25,
     borderTopStartRadius: 25,
   },
-  content: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: colors.white,
-  },
+  content: {flex: 1, padding: 16, backgroundColor: colors.white},
   times: {flexDirection: 'row', justifyContent: 'space-between', gap: 25},
-  inputTime: {flex: 1},
   button: {marginTop: 40},
 });
 

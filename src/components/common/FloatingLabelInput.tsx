@@ -86,7 +86,11 @@ const FloatingLabelInput = (
         {placeholder}
       </Animated.Text>
       <TextInput
-        style={[styles.inputStyle, style]}
+        style={[
+          styles.inputStyle,
+          style,
+          {pointerEvents: others.editable ? 'auto' : 'none'},
+        ]}
         {...others}
         value={value}
         onFocus={handleFocus}

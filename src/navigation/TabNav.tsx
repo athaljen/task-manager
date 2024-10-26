@@ -8,6 +8,7 @@ import {Icons} from '../assets';
 import gs from '../theme/gs';
 import colors from '../theme/colors';
 import DashboardNav from './DashboardNav';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator<TabNavParamList>();
 
@@ -26,6 +27,8 @@ const tabBarIcon = (
 };
 
 const TabNav = () => {
+  const {top} = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -37,7 +40,7 @@ const TabNav = () => {
         tabBarItemStyle: {marginTop: 5},
         tabBarHideOnKeyboard: true,
       }}
-      sceneContainerStyle={gs.bgWhite}>
+      sceneContainerStyle={[{backgroundColor: colors.blue, paddingTop: top}]}>
       <Tab.Screen
         name="TasksScreen"
         component={TasksScreen}

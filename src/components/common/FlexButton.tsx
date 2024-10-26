@@ -9,7 +9,8 @@ const FlexButton = (props: PressableProps) => {
       style={({pressed}) => [
         {transform: [{scale: pressed ? 0.97 : 1}]},
         props.style as ViewStyle,
-      ]}>
+      ]}
+      accessible>
       {props.children}
     </Pressable>
   );

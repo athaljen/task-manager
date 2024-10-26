@@ -3,26 +3,16 @@ import React, {memo} from 'react';
 import {Pressable, PressableProps, StyleSheet, ViewStyle} from 'react-native';
 import colors from '../../theme/colors';
 
-const Card = ({
-  style,
-  selected,
-  ...rest
-}: {selected?: boolean} & PressableProps) => {
+const Card = ({style, ...rest}: PressableProps) => {
   return (
     <Pressable
       {...rest}
-      style={[
+      style={({pressed}) => [
         styles.Card,
         style as ViewStyle,
-        // {
-        //   transform: [
-        //     {scale: selected ? 1.01 : 1},
-        //     {
-        //       translateY: selected ? 5 : 0,
-        //     },
-        //   ],
-        // },
-      ]}></Pressable>
+        {transform: [{scale: pressed ? 1.01 : 1}]},
+      ]}
+    />
   );
 };
 

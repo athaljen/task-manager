@@ -2460,10 +2460,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/typescript-config@npm:0.75.1":
-  version: 0.75.1
-  resolution: "@react-native/typescript-config@npm:0.75.1"
-  checksum: 831025b476fece79a91e6f6ada4bfbc8c7de3f32149c1c9d64b1bc2ad43bb5ebe1eaf738fb53761cd648d1a546a52fa552b0836e20868ed12c41ace8c10daa4c
+"@react-native/typescript-config@npm:^0.76.0":
+  version: 0.76.0
+  resolution: "@react-native/typescript-config@npm:0.76.0"
+  checksum: ffebc94137f6060f57944ee19b712858476263567b2cbbdd6d888827a4c3030a211b8d6de0692bd162d12f77cab9e9321e1be3b63a4685f09db5446551e0a402
   languageName: node
   linkType: hard
 
@@ -2653,6 +2653,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@testing-library/react-native@npm:^12.8.0":
+  version: 12.8.0
+  resolution: "@testing-library/react-native@npm:12.8.0"
+  dependencies:
+    jest-matcher-utils: ^29.7.0
+    pretty-format: ^29.7.0
+    redent: ^3.0.0
+  peerDependencies:
+    jest: ">=28.0.0"
+    react: ">=16.8.0"
+    react-native: ">=0.59"
+    react-test-renderer: ">=16.8.0"
+  peerDependenciesMeta:
+    jest:
+      optional: true
+  checksum: 324f2eeed9753fa986d897cacd16a6a2de7c59648f4e28c65a3b66bb6bfee1b6a8e62396012361b6b3947af632ab4b4e51d6c6f49419564d4f5aa0dcdb170331
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -2725,6 +2744,16 @@ __metadata:
   dependencies:
     "@types/istanbul-lib-report": "*"
   checksum: 93eb18835770b3431f68ae9ac1ca91741ab85f7606f310a34b3586b5a34450ec038c3eed7ab19266635499594de52ff73723a54a72a75b9f7d6a956f01edee95
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:^29.5.14":
+  version: 29.5.14
+  resolution: "@types/jest@npm:29.5.14"
+  dependencies:
+    expect: ^29.0.0
+    pretty-format: ^29.0.0
+  checksum: 18dba4623f26661641d757c63da2db45e9524c9be96a29ef713c703a9a53792df9ecee9f7365a0858ddbd6440d98fe6b65ca67895ca5884b73cbc7ffc11f3838
   languageName: node
   linkType: hard
 
@@ -4813,7 +4842,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expect@npm:^29.7.0":
+"expect@npm:^29.0.0, expect@npm:^29.7.0":
   version: 29.7.0
   resolution: "expect@npm:29.7.0"
   dependencies:
@@ -7193,6 +7222,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"min-indent@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "min-indent@npm:1.0.1"
+  checksum: bfc6dd03c5eaf623a4963ebd94d087f6f4bbbfd8c41329a7f09706b0cb66969c4ddd336abeb587bc44bc6f08e13bf90f0b374f9d71f9f01e04adc2cd6f083ef1
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^3.0.2, minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -7926,7 +7962,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-format@npm:^29.7.0":
+"pretty-format@npm:^29.0.0, pretty-format@npm:^29.7.0":
   version: 29.7.0
   resolution: "pretty-format@npm:29.7.0"
   dependencies:
@@ -8114,6 +8150,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-alert-notification@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "react-native-alert-notification@npm:0.4.0"
+  peerDependencies:
+    react: "*"
+    react-native: ">=0.62.0"
+    react-native-safe-area-context: "*"
+  checksum: a3698e5b03543e193c56f634c9f9fe7bd769ce8df6d9ed4b51d5014e6b6626298a580ea6aeab62c83e5c39909408063ac130ddcabf049d958ebb8ae64bd06d4c
+  languageName: node
+  linkType: hard
+
 "react-native-calendar-strip@npm:^2.2.6":
   version: 2.2.6
   resolution: "react-native-calendar-strip@npm:2.2.6"
@@ -8136,6 +8183,16 @@ __metadata:
     react: ">= 17.0.1"
     react-native: ">= 0.64.3"
   checksum: 94191bf3ce6e88a3acc4ca5e5514eaa6fc15c61666393d85ca258dba3a3efd9145c8fd31ed0f18676d7f083e17f08c760de8193ad24367a65761330084bcdc6b
+  languageName: node
+  linkType: hard
+
+"react-native-material-menu@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "react-native-material-menu@npm:2.0.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 6aaf1f53f41c03803b37c84bde5d4b4994f76092e992a91523ab09879e042d0df931c0ba8d5f7ef24074ca5cb88fdd7defbfabb68aef209e1a0ad8202562aab1
   languageName: node
   linkType: hard
 
@@ -8355,6 +8412,16 @@ __metadata:
     react: ">= 15.2.1"
     react-native: ">= 0.30.0"
   checksum: 68fe28f044a42d30ea92f2a2a37d3d96bfb5f57cb2aea763edd37c52f1c735a7e4c559b6ab88339b4ce04cd043490fdaf210a43e0e3eb0eb00fcc25fd0f9ccfe
+  languageName: node
+  linkType: hard
+
+"redent@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "redent@npm:3.0.0"
+  dependencies:
+    indent-string: ^4.0.0
+    strip-indent: ^3.0.0
+  checksum: fa1ef20404a2d399235e83cc80bd55a956642e37dd197b4b612ba7327bf87fa32745aeb4a1634b2bab25467164ab4ed9c15be2c307923dd08b0fe7c52431ae6b
   languageName: node
   linkType: hard
 
@@ -9224,6 +9291,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-indent@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "strip-indent@npm:3.0.0"
+  dependencies:
+    min-indent: ^1.0.0
+  checksum: 18f045d57d9d0d90cd16f72b2313d6364fd2cb4bf85b9f593523ad431c8720011a4d5f08b6591c9d580f446e78855c5334a30fb91aa1560f5d9f95ed1b4a0530
+  languageName: node
+  linkType: hard
+
 "strip-json-comments@npm:^3.1.1":
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
@@ -9295,12 +9371,14 @@ __metadata:
     "@react-native/babel-preset": 0.75.1
     "@react-native/eslint-config": 0.75.1
     "@react-native/metro-config": 0.75.1
-    "@react-native/typescript-config": 0.75.1
+    "@react-native/typescript-config": ^0.76.0
     "@react-navigation/bottom-tabs": ^6.6.1
     "@react-navigation/material-top-tabs": ^6.6.14
     "@react-navigation/native": ^6.1.18
     "@react-navigation/native-stack": ^6.11.0
     "@reduxjs/toolkit": ^2.3.0
+    "@testing-library/react-native": ^12.8.0
+    "@types/jest": ^29.5.14
     "@types/lodash.debounce": ^4.0.9
     "@types/react": ^18.2.6
     "@types/react-test-renderer": ^18.0.0
@@ -9312,8 +9390,10 @@ __metadata:
     react: 18.3.1
     react-hook-form: ^7.53.1
     react-native: 0.75.1
+    react-native-alert-notification: ^0.4.0
     react-native-calendar-strip: ^2.2.6
     react-native-date-picker: ^5.0.7
+    react-native-material-menu: ^2.0.0
     react-native-pager-view: ^6.4.1
     react-native-safe-area-context: ^4.11.1
     react-native-screens: ^3.34.1

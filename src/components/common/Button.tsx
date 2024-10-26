@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
 import {
   Pressable,
+  PressableProps,
   StyleProp,
   StyleSheet,
   Text,
@@ -16,11 +17,12 @@ type buttonProps = {
   onPress?: () => void;
 };
 
-const Button: React.FC<buttonProps> = props => {
-  const {title, buttonStyle, titleStyle, onPress} = props;
+const Button: React.FC<buttonProps & PressableProps> = props => {
+  const {title, buttonStyle, titleStyle, onPress, ...rest} = props;
 
   return (
     <Pressable
+      {...rest}
       style={({pressed}) => [
         styles.Button,
         buttonStyle,

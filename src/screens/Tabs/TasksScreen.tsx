@@ -9,9 +9,12 @@ import ReactNativeCalendarStrip from 'react-native-calendar-strip';
 import FlexButton from '../../components/common/FlexButton';
 import {Icons} from '../../assets';
 import gs from '../../theme/gs';
-import {useSelector} from 'react-redux';
-import {selectTasks} from '../../store/taskSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteTaskAction, selectTasks} from '../../store/taskSlice';
 import SearchComponent from '../../components/app/SearchComponent';
+import EmptyTask from '../../components/app/EmptyTask';
+import {TaskActionType} from '../../types/index.type';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Today = moment();
 
@@ -21,71 +24,97 @@ type FiltersType = {
   category: string;
 };
 
+/// Task Screen
 const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
-  const [Tasks, setTasks] = useState<TaskType[]>([]);
+  const {top} = useSafeAreaInsets();
   const TasksState = useSelector(selectTasks);
+  // Filtered tasks
+  const [Tasks, setTasks] = useState<TaskType[]>([]);
   const [SelectedFilters, setSelectedFilters] = useState<FiltersType>({
     date: Today,
     text: '',
     category: '',
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    // Filter tasks based on selected filters
     setTasks(
       TasksState.filter(item => {
-        return (
-          item.date === moment(SelectedFilters.date).format('DD-MM-YYYY') &&
-          item.title.includes(SelectedFilters.text) &&
-          item.category === SelectedFilters.category
-        );
+        const isDateMatch =
+          item.date === moment(SelectedFilters.date).format('DD-MM-YYYY');
+        const isTextMatch = SelectedFilters.text
+          ? item.title
+              ?.toLocaleLowerCase()
+              .includes(SelectedFilters.text?.toLocaleLowerCase()) ||
+            item.description
+              ?.toLocaleLowerCase()
+              .includes(SelectedFilters.text?.toLocaleLowerCase())
+          : true;
+        const isCategoryMatch = SelectedFilters.category
+          ? item.category === SelectedFilters.category
+          : true;
+
+        return isDateMatch && isTextMatch && isCategoryMatch;
       }),
     );
   }, [SelectedFilters, TasksState]);
 
+  // Handle task navigation
   const handleTaskNavigate = useCallback(
-    (type: 'add' | 'edit' | 'view', data?: TaskType) => {
-      if (type == 'add') navigation.navigate('TaskCreate', {action: 'add'});
-      else if (type == 'edit')
-        navigation.navigate('TaskCreate', {action: 'edit'});
+    (type: TaskActionType, data?: TaskType) => {
+      if (type == 'add') {
+        navigation.navigate('TaskCreate', {action: 'add'});
+      } else if (type == 'edit' && data)
+        navigation.navigate('TaskCreate', {action: 'edit', data});
       else if (type == 'view')
         navigation.navigate('TaskCreate', {action: 'view', data});
+      else if (type == 'delete' && data) {
+        dispatch(deleteTaskAction(data));
+      }
     },
     [],
   );
 
+  // Render tasks
   const renderTasks = useCallback(({item}: {item: TaskType}) => {
     return (
-      <TaskItem item={item} onPress={handleTaskNavigate.bind(this, 'view')} />
+      <TaskItem
+        item={item}
+        onPress={handleTaskNavigate.bind(this, 'view')}
+        onEdit={handleTaskNavigate.bind(this, 'edit')}
+        onDelete={handleTaskNavigate.bind(this, 'delete')}
+      />
     );
   }, []);
 
   return (
-    <View style={styles.TaskScreen}>
-      <View>
-        <ReactNativeCalendarStrip
-          style={styles.calendarStyle}
-          calendarHeaderStyle={styles.calendarHeader}
-          calendarColor={colors.blue}
-          headerText={moment(SelectedFilters.date).format('MMMM YYYY')}
-          dateNameStyle={styles.dateText}
-          dateNumberStyle={styles.dateText}
-          iconLeftStyle={styles.iconStyle}
-          iconRightStyle={styles.iconStyle}
-          selectedDate={SelectedFilters.date}
-          highlightDateNameStyle={styles.selectedDate}
-          highlightDateNumberStyle={styles.selectedDate}
-          highlightDateContainerStyle={styles.highlighted}
-          scrollable={true}
-          onDateSelected={d => {
-            setSelectedFilters(prev => ({...prev, date: d}));
-          }}
-        />
-        <SearchComponent
-          onSearch={search => {
-            setSelectedFilters(prev => ({...prev, ...search}));
-          }}
-        />
-      </View>
+    <View style={[styles.TaskScreen]}>
+      <ReactNativeCalendarStrip
+        style={styles.calendarStyle}
+        calendarHeaderStyle={styles.calendarHeader}
+        calendarColor={colors.blue}
+        headerText={moment(SelectedFilters.date).format('MMMM YYYY')}
+        dateNameStyle={styles.dateText}
+        dateNumberStyle={styles.dateText}
+        iconLeftStyle={styles.iconStyle}
+        iconRightStyle={styles.iconStyle}
+        selectedDate={SelectedFilters.date}
+        highlightDateNameStyle={styles.selectedDate}
+        highlightDateNumberStyle={styles.selectedDate}
+        highlightDateContainerStyle={styles.highlighted}
+        scrollable={true}
+        onDateSelected={d => {
+          setSelectedFilters(prev => ({...prev, date: d}));
+        }}
+      />
+      <SearchComponent
+        isFilterApplied={SelectedFilters.category ? true : false}
+        onSearch={search => {
+          setSelectedFilters(prev => ({...prev, ...search}));
+        }}
+      />
+
       <StatusBar backgroundColor={colors.blue} barStyle={'light-content'} />
       <View style={styles.taskCont}>
         <FlatList
@@ -97,6 +126,15 @@ const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
           removeClippedSubviews={true}
           showsVerticalScrollIndicator={false}
           style={styles.flatList}
+          ListEmptyComponent={
+            <EmptyTask
+              message={
+                TasksState.length
+                  ? 'No Task found!'
+                  : 'No Task found, Click on the + icon to add.'
+              }
+            />
+          }
         />
       </View>
       <FlexButton
@@ -122,7 +160,7 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 25,
   },
   flatList: {paddingTop: 10},
-  calendarStyle: {height: 110, marginHorizontal: 8},
+  calendarStyle: {height: 110, marginHorizontal: 8, width: '95%'},
   highlighted: {backgroundColor: colors.white, borderRadius: 8},
   dateText: {color: colors.white, fontFamily: 'Poppins-Bold'},
   iconStyle: {tintColor: colors.white},

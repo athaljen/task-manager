@@ -5,7 +5,7 @@ import {
 import React, {memo} from 'react';
 import AppStack from './AppStack';
 
-const NavigationRef = createNavigationContainerRef();
+export const NavigationRef = createNavigationContainerRef();
 
 const RootNav = () => {
   return (

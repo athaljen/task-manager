@@ -4,15 +4,24 @@ import {AppScreens} from '../constants';
 import {AppStackParamList} from './navigation.types';
 import gs from '../theme/gs';
 import colors from '../theme/colors';
-import {Image, StyleSheet} from 'react-native';
+import {Image, Pressable, StyleSheet} from 'react-native';
 import TabNav from './TabNav';
 import TaskCreate from '../screens/stack/TaskCreate';
 import {Icons} from '../assets';
+import {NavigationRef} from './RootNav';
+import Splash from '../screens/stack/Splash';
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 const headerLeft = () => (
-  <Image source={Icons.Meeting} style={gs.Icon20} resizeMode="contain" />
+  <Pressable onPress={NavigationRef.goBack} style={gs.pv5}>
+    <Image
+      source={Icons.leftArrow}
+      style={gs.Icon20}
+      resizeMode="contain"
+      tintColor={colors.white}
+    />
+  </Pressable>
 );
 
 const AppStack = () => {
@@ -27,6 +36,11 @@ const AppStack = () => {
         headerTitleAlign: 'center',
         headerTitleStyle: styles.headerTitle,
       }}>
+      <Stack.Screen
+        name={AppScreens.Splash}
+        component={Splash}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name={AppScreens.MainTab}
         component={TabNav}

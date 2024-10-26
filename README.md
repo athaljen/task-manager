@@ -1,79 +1,92 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## Project Overview
 
-# Getting Started
+The **Task Manager** app offers a streamlined, user-friendly interface for efficient task management. It enables users to:
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+#### Install The Aps ~ [here]('')
 
-## Step 1: Start the Metro Server
+- **Add Tasks**: Quickly create new tasks with essential details.
+- **Edit Tasks**: Update and modify existing tasks to keep information current.
+- **View Tasks**: Access a detailed view of each individual task.
+- **Update Task Status**: Change the status or details of tasks as needed.
+- **Delete Tasks**: Remove tasks when they’re no longer required.
+- **Filter & Search**: Easily find tasks by title, category, or description.
+- **Dashboard**: Effortlessly manage tasks with a dashboard that organizes completed and pending tasks, helping users stay on top of their responsibilities.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+---
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### Platform Choice
+
+For this project, I chose to build with **React Native CLI** to gain full control over the app's functionality and customization. While **Expo** could have simplified some aspects, I opted for the Native CLI to demonstrate my proficiency in native development—especially in handling navigation, integrating native libraries, and implementing custom functionality.
+
+Instead of relying heavily on pre-built UI libraries, I developed custom components with animations. This approach highlights my ability to create intuitive, user-friendly interfaces from scratch, allowing for a tailored user experience while showcasing advanced design and animation skills.
+
+---
+
+# Setup Instructions
+
+**Clone the Repository**  
+ Clone the project repository to your local machine:
 
 ```bash
-# using npm
-npm start
+git clone <repository-url>
+```
 
-# OR using Yarn
+Navigate to the Project Directory
+
+```bash
+cd task-manager
+```
+
+Install all required dependencies using Yarn:
+
+```bash
+npm install
+yarn install
+```
+
+Run the App Start the development server:
+
+```bash
 yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### For iOS
+# Features Implemented
 
-```bash
-# using npm
-npm run ios
+- **Task Management**: Easily create, edit, and delete tasks.
+- **Filtering and Searching**: Find tasks by title, category, or description.
+- **Date-wise Task View**: Organize and view tasks by date for better tracking.
+- **Dashboard**: Manage and track completed and pending tasks.
+- **User-Friendly Interface**: Intuitive UI designed for seamless navigation and ease of use.
 
-# OR using Yarn
-yarn ios
-```
+# Technologies and Libraries Used
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+- **React Native CLI**: Framework for building cross-platform mobile applications.
+- **React Navigation**: Library for intuitive and flexible routing and navigation between app screens.
+- **Redux & Redux Toolkit**: Tools for managing and maintaining global state efficiently.
+- **Redux Persist**: Persist and rehydrate Redux state to ensure data remains available across app restarts.
+- **AsyncStorage**: Storage solution for persisting data locally on the device, enabling offline functionality.
+- **TypeScript**: Adds static typing to JavaScript, improving code reliability and developer experience.
+- **Moment.js**: Library for manipulating and formatting dates and times with ease.
+- **React Hook Form**: Lightweight library for form handling and validation with React Native components.
+- **React Native Alert Notification**: Provides customizable alert notifications within the app.
+- **React Native Calendar Strip**: UI component for adding calendar functionality with a horizontal date strip.
+- **React Native Date Picker**: Simple and customizable date picker component.
+- **React Native Material Menu**: Provides a material design-inspired menu component.
+- **React Native Pager View**: Optimized library for handling horizontal swiping between views.
+- **React Native Safe Area Context**: Ensures components respect device safe areas (e.g., notches).
+- **React Native Screens**: Enhances screen performance and memory usage by optimizing screen rendering.
+- **React Native Tab View**: Provides a customizable and performant tab view component for organizing content.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+# Known Limitations
 
-## Step 3: Modifying your App
+- **Limited Sorting**: Current implementation offers basic sorting options for task views. Further sorting criteria could be added for enhanced task organization.
+- **Basic Error Handling**: Error handling is minimal, with basic alerts in the UI. More descriptive and context-specific error messages would improve the user experience.
+- **Installation Limitation:** As the app is developed with React Native CLI, iOS installation directly on a device requires an Apple Developer Team account. Though you can still test the app on Android by using the provided [APK file]().
 
-Now that you have successfully run the app, let's modify it.
+# Future Improvements
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **Calendar Integration:** Add functionality to sync tasks with phone calendars for seamless scheduling.
+- **Task Notifications:** Implement notifications to alert users when task deadlines or scheduled times are approaching.
+- **User Authentication:** Introduce user authentication to allow personalized task management and secure data access.
+- **Performance Optimization:** Optimize the app’s performance to efficiently handle large task lists without compromising on speed or responsiveness.

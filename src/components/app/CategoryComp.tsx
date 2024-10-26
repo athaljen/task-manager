@@ -22,6 +22,7 @@ const CategoryComp = memo(({disable, onSelect, title, selected}: Props) => {
       <View style={styles.category}>
         {Object.values(TaskCategory).map(item => (
           <FlexButton
+            testID={`categoryId-${item}`}
             key={item}
             style={[
               styles.catItems,
