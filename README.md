@@ -1,8 +1,10 @@
+![example image](/assets/example.png)
+
 ## Project Overview
 
 The **Task Manager** app offers a streamlined, user-friendly interface for efficient task management. It enables users to:
 
-#### Install The Aps ~ [here]('')
+#### Install The Aps ~ [here](https://drive.google.com/file/d/1y30pNjKUzcBQPxfeCkfG-QRvTthGcDDy/view?usp=drive_link)
 
 - **Add Tasks**: Quickly create new tasks with essential details.
 - **Edit Tasks**: Update and modify existing tasks to keep information current.
@@ -37,18 +39,20 @@ Navigate to the Project Directory
 cd task-manager
 ```
 
-Install all required dependencies using Yarn:
+Install all required dependencies using Yarn/Npm:
 
 ```bash
-npm install
 yarn install
+//or
+npm install
 ```
 
 Run the App Start the development server:
 
 ```bash
-yarn start
-npm run android
+yarn android
+//or
+yarn ios
 ```
 
 # Features Implemented
@@ -82,7 +86,7 @@ npm run android
 
 - **Limited Sorting**: Current implementation offers basic sorting options for task views. Further sorting criteria could be added for enhanced task organization.
 - **Basic Error Handling**: Error handling is minimal, with basic alerts in the UI. More descriptive and context-specific error messages would improve the user experience.
-- **Installation Limitation:** As the app is developed with React Native CLI, iOS installation directly on a device requires an Apple Developer Team account. Though you can still test the app on Android by using the provided [APK file]().
+- **Installation Limitation:** As the app is developed with React Native CLI, iOS installation directly on a device requires an Apple Developer Team account. Though you can still test the app on Android by using the provided [APK file](https://drive.google.com/file/d/1y30pNjKUzcBQPxfeCkfG-QRvTthGcDDy/view?usp=drive_link).
 
 # Future Improvements
 

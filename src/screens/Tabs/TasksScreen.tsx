@@ -14,7 +14,7 @@ import {deleteTaskAction, selectTasks} from '../../store/taskSlice';
 import SearchComponent from '../../components/app/SearchComponent';
 import EmptyTask from '../../components/app/EmptyTask';
 import {TaskActionType} from '../../types/index.type';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {isIos} from '../../constants';
 
 const Today = moment();
 
@@ -26,7 +26,6 @@ type FiltersType = {
 
 /// Task Screen
 const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
-  const {top} = useSafeAreaInsets();
   const TasksState = useSelector(selectTasks);
   // Filtered tasks
   const [Tasks, setTasks] = useState<TaskType[]>([]);
@@ -126,6 +125,7 @@ const TasksScreen = ({navigation}: ScreenProps<'TasksScreen'>) => {
           removeClippedSubviews={true}
           showsVerticalScrollIndicator={false}
           style={styles.flatList}
+          contentContainerStyle={styles.flatList}
           ListEmptyComponent={
             <EmptyTask
               message={
@@ -159,8 +159,12 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 25,
     borderTopStartRadius: 25,
   },
-  flatList: {paddingTop: 10},
-  calendarStyle: {height: 110, marginHorizontal: 8, width: '95%'},
+  flatList: {paddingTop: 5, paddingBottom: 70},
+  calendarStyle: {
+    height: 110,
+    marginHorizontal: 8,
+    width: isIos ? '95%' : 'auto',
+  },
   highlighted: {backgroundColor: colors.white, borderRadius: 8},
   dateText: {color: colors.white, fontFamily: 'Poppins-Bold'},
   iconStyle: {tintColor: colors.white},

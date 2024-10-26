@@ -14,6 +14,7 @@ import {useDispatch} from 'react-redux';
 import {addTaskAction, updateTaskAction} from '../../store/taskSlice';
 import CategoryComp from '../../components/app/CategoryComp';
 import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
+import {getUniqueId} from '../../util';
 
 const TaskCreate = ({
   navigation,
@@ -38,6 +39,7 @@ const TaskCreate = ({
     watch,
     setValue,
     handleSubmit,
+    getValues,
   } = useForm<TaskType>({
     defaultValues: {
       title: defaultData?.title || '',
@@ -58,7 +60,8 @@ const TaskCreate = ({
   const onSubmit = useCallback(
     (data: TaskType) => {
       if (isAdd) {
-        dispatch(addTaskAction({...data}));
+        const id = getUniqueId();
+        dispatch(addTaskAction({...data, id}));
         Toast.show({
           title: 'Task Created',
           textBody: 'Task has been created successfully',
@@ -105,7 +108,12 @@ const TaskCreate = ({
       dateModalRef.current.open({
         type: forField == 'date' ? 'date' : 'time',
         field: forField,
-        date: defaultData?.[forField]
+        date: getValues(forField)
+          ? moment(
+              getValues(forField),
+              forField == 'date' ? 'DD-MM-YYYY' : 'hh:mm A',
+            ).toDate()
+          : defaultData?.[forField]
           ? moment(
               defaultData?.[forField],
               forField == 'date' ? 'DD-MM-YYYY' : 'hh:mm A',
